@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Global } from '../../services/global';
 
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
@@ -12,13 +13,16 @@ import { Article } from '../../models/article';
 })
 export class ArticleComponent implements OnInit {
 
-	public article : Article;
+  public article : Article;
+  public url     : string;
 
   constructor(
 		public _articleService : ArticleService,
 		private _route         : ActivatedRoute,
 		private _router        : Router
-  ) { }
+  ) {
+    this.url = Global.url;
+  }
 
   ngOnInit(): void {
   	this._route.params.subscribe(params =>{
@@ -34,6 +38,7 @@ export class ArticleComponent implements OnInit {
   			},
   			error => {
   				console.log(error);
+          this._router.navigate(['/home']);
   			}
   		);
   	});
